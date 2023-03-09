@@ -1,0 +1,78 @@
+scalar DateTime
+
+schema {
+  query: Query
+}
+type Query {
+  # relationship-v2
+  identityProvider(email: String!): [IdentityProvider!]!
+
+  # relationship
+  people(campusCode: String!, searchTerm: String!, maxResults: Int): [UserSearchRecord]!
+  programsByUser: [Program!]!
+
+  # branding
+  moreApps: [App!]!
+}
+
+type IdentityProvider {
+  campusCode: ID!
+  idp: String!
+  name: String!
+}
+
+type App {
+  contextUrl: String!
+  name: String!
+}
+
+type Program {
+  id: ID!
+  name: String!
+  features: [Feature!]!
+}
+
+type Feature {
+  id: ID!
+  name: ID!
+  url: String!
+}
+
+type UserSearchRecord {
+  userId: ID!
+  firstName: String!
+  lastName: String!
+  email: String
+}
+
+type AuthUser {
+  userId: ID!
+  firstName: String!
+  lastName: String!
+}
+
+type DocumentSubject {
+  id: ID!
+  name: String!
+}
+
+type Document {
+  id: ID!
+  name: String!
+  description: String
+  type: String!
+  status: String!
+  keyword: String
+  subjects: [DocumentSubject!]!
+
+  tenant: String!
+  campus: String!
+  domain: String!
+  program: String
+  solution: String
+
+  createdDate: DateTime!
+  createdBy: AuthUser!
+  lastUpdatedDate: DateTime!
+  lastUpdatedBy: AuthUser!
+}
